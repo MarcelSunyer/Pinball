@@ -29,12 +29,15 @@ public:
 
 	// Lower ground sensor (will kill all objects passig through it)
 	PhysBody* lower_ground_sensor;
+	PhysBody* prueva;
 	bool sensed;
 
 	// Textures
 	SDL_Texture* circle;
 	SDL_Texture* box;
 	SDL_Texture* rick;
+	SDL_Texture* map;
+	SDL_Texture* bola;
 
 	// FX
 	uint bonus_fx;

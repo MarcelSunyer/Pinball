@@ -98,7 +98,7 @@ update_status ModulePhysics::PostUpdate()
 				{
 					b2CircleShape* shape = (b2CircleShape*)f->GetShape();
 					b2Vec2 pos = f->GetBody()->GetPosition();
-					App->renderer->DrawCircle(METERS_TO_PIXELS(pos.x), METERS_TO_PIXELS(pos.y), METERS_TO_PIXELS(shape->m_radius), 255, 255, 255);
+
 				}
 				break;
 
@@ -108,7 +108,7 @@ update_status ModulePhysics::PostUpdate()
 					b2PolygonShape* polygonShape = (b2PolygonShape*)f->GetShape();
 					int32 count = polygonShape->GetVertexCount();
 					b2Vec2 prev, v;
-
+					
 					for(int32 i = 0; i < count; ++i)
 					{
 						v = b->GetWorldPoint(polygonShape->GetVertex(i));
@@ -155,47 +155,7 @@ update_status ModulePhysics::PostUpdate()
 				break;
 			}
 
-			// TODO 1: If mouse button 1 is pressed ...
-			// App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN
-			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
-			{
-				// test if the current body contains mouse position
-				b2Vec2 p = { PIXEL_TO_METERS(App->input->GetMouseX()), PIXEL_TO_METERS(App->input->GetMouseY()) };
-				if (f->GetShape()->TestPoint(b->GetTransform(), p) == true)
-				{
-
-					// If a body was selected we will attach a mouse joint to it
-					// so we can pull it around
-
-					// TODO 2: If a body was selected, create a mouse joint
-					// using mouse_joint class property
-
-					// NOTE: you do TODO2 here or also in the original handout's location. 
-					// It doesn't matter unless you are triggering several objects at once;
-					// I leave it to you to add safety checks to avoid re-defining several mouse joints.
-
-					// The variable "b2Body* mouse_body;" is defined in the header ModulePhysics.h 
-					// We need to keep this body throughout several game frames; you cannot define it as a local variable here. 
-					mouse_body = b;
-
-					// Get current mouse position
-					b2Vec2 mousePosition;
-					mousePosition.x = p.x;
-					mousePosition.y = p.y;
-
-					// Define new mouse joint
-					b2MouseJointDef def;
-					def.bodyA = ground; // First body must be a static ground
-					def.bodyB = mouse_body; // Second body will be the body to attach to the mouse
-					def.target = mousePosition; // The second body will be pulled towards this location
-					def.dampingRatio = 0.5f; // Play with this value
-					def.frequencyHz = 2.0f; // Play with this value
-					def.maxForce = 200.0f * mouse_body->GetMass(); // Play with this value
-
-					// Add the new mouse joint into the World
-					mouse_joint = (b2MouseJoint*)world->CreateJoint(&def);
-				}
-			}
+			
 		}
 	}
 

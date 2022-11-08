@@ -11,7 +11,7 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 {
 
 	// Initialise all the internal class variables, at least to NULL pointer
-	circle = box = rick = NULL;
+	circle = box = carcasa = NULL;
 	ray_on = false;
 	sensed = false;
 	
@@ -33,7 +33,7 @@ bool ModuleSceneIntro::Start()
 	// Load textures
 	circle = App->textures->Load("pinball/wheel.png"); 
 	box = App->textures->Load("pinball/crate.png");
-	rick = App->textures->Load("pinball/rick_head.png");
+	carcasa = App->textures->Load("pinball/carcasa.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	map = App->textures->Load("pinball/map.png");
 
@@ -45,6 +45,61 @@ bool ModuleSceneIntro::Start()
 	// Add this module (ModuleSceneIntro) as a listener for collisions with the sensor.
 	// In ModulePhysics::PreUpdate(), we iterate over all sensors and (if colliding) we call the function ModuleSceneIntro::OnCollision()
 	lower_ground_sensor->listener = this;
+	
+	int point_carcasa[100] = {
+		490, 6,
+	489, 739,
+	298, 741,
+	298, 725,
+	433, 630,
+	440, 615,
+	441, 441,
+	430, 432,
+	446, 420,
+	446, 680,
+	453, 686,
+	462, 687,
+	471, 686,
+	475, 675,
+	475, 155,
+	470, 132,
+	463, 114,
+	455, 102,
+	474, 91,
+	487, 71,
+	487, 41,
+	474, 21,
+	452, 11,
+	422, 11,
+	404, 23,
+	392, 42,
+	388, 57,
+	328, 45,
+	283, 41,
+	239, 41,
+	188, 45,
+	140, 63,
+	92, 94,
+	63, 122,
+	39, 164,
+	26, 202,
+	24, 436,
+	41, 456,
+	43, 459,
+	41, 466,
+	27, 476,
+	28, 605,
+	30, 621,
+	39, 631,
+	170, 724,
+	170, 737,
+	12, 738,
+	10, 7,
+	489, 6,
+	489, 7
+	};
+
+	chain_carcasa.add(App->physics->CreateChain(10, 7, point_carcasa, 100));
 
 	return ret;
 }
@@ -105,15 +160,8 @@ update_status ModuleSceneIntro::Update()
 		c = c->next;
 	}
 
-	// Rick Heads
-	c = ricks.getFirst();
-	while(c != NULL)
-	{
-		int x, y;
-		c->data->GetPosition(x, y);
-		App->renderer->Blit(rick, x, y, NULL, 1.0f, c->data->GetRotation());
-		c = c->next;
-	}
+	
+	
 
 	// Raycasts -----------------
 	if(ray_on == true)

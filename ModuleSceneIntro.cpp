@@ -127,9 +127,6 @@ bool ModuleSceneIntro::Start()
 	chain_carcasa.add(App->physics->CreateChain(0, 0, point_carcasa, 114, b2_staticBody));
 	mitg.add(App->physics->CreateChain(0, 0, point_mitg, 30, b2_staticBody));
 
-	chain_carcasa.add(App->physics->CreateChain(0, 7, point_carcasa, 100, b2_staticBody));
-
-
 	return ret;
 }
 

@@ -26,6 +26,9 @@ public:
 	p2List<PhysBody*> circles;
 	p2List<PhysBody*> boxes;
 	p2List<PhysBody*> chain_carcasa;
+	p2List<PhysBody*> mitg;
+
+
 
 	// Lower ground sensor (will kill all objects passig through it)
 	PhysBody* lower_ground_sensor;
@@ -33,11 +36,12 @@ public:
 	bool sensed;
 
 	// Textures
-	SDL_Texture* circle;
-	SDL_Texture* box;
-	SDL_Texture* carcasa;
-	SDL_Texture* map;
-	SDL_Texture* bola;
+	
+	SDL_Texture* t_carcasa;
+	SDL_Texture* t_mitg;
+	SDL_Texture* t_map;
+	SDL_Texture* t_bola;
+	
 
 	// FX
 	uint bonus_fx;

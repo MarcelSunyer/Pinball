@@ -11,7 +11,7 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 {
 
 	// Initialise all the internal class variables, at least to NULL pointer
-	circle = box = carcasa = NULL;
+	t_mitg = t_map = t_carcasa = NULL;
 	ray_on = false;
 	sensed = false;
 	
@@ -31,11 +31,10 @@ bool ModuleSceneIntro::Start()
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	// Load textures
-	circle = App->textures->Load("pinball/wheel.png"); 
-	box = App->textures->Load("pinball/crate.png");
-	carcasa = App->textures->Load("pinball/carcasa.png");
+	t_carcasa = App->textures->Load("pinball/carcasa.png");
+	t_mitg = App->textures->Load("pinball/wheel.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
-	map = App->textures->Load("pinball/map.png");
+	t_map = App->textures->Load("pinball/map.png");
 
 	// Create a big red sensor on the bottom of the screen.
 	// This sensor will not make other objects collide with it, but it can tell if it is "colliding" with something else
@@ -46,60 +45,86 @@ bool ModuleSceneIntro::Start()
 	// In ModulePhysics::PreUpdate(), we iterate over all sensors and (if colliding) we call the function ModuleSceneIntro::OnCollision()
 	lower_ground_sensor->listener = this;
 	
-	int point_carcasa[100] = {
-		490, 6,
-	489, 739,
-	298, 741,
-	298, 725,
-	433, 630,
-	440, 615,
-	441, 441,
-	430, 432,
-	446, 420,
-	446, 680,
-	453, 686,
-	462, 687,
-	471, 686,
-	475, 675,
-	475, 155,
-	470, 132,
-	463, 114,
-	455, 102,
-	474, 91,
-	487, 71,
-	487, 41,
-	474, 21,
-	452, 11,
-	422, 11,
-	404, 23,
-	392, 42,
-	388, 57,
-	328, 45,
-	283, 41,
-	239, 41,
-	188, 45,
-	140, 63,
-	92, 94,
-	63, 122,
-	39, 164,
-	26, 202,
-	24, 436,
-	41, 456,
-	43, 459,
-	41, 466,
-	27, 476,
-	28, 605,
-	30, 621,
-	39, 631,
-	170, 724,
-	170, 737,
-	12, 738,
-	10, 7,
-	489, 6,
-	489, 7
+	int point_carcasa[114] = {
+		28, 15,
+	481, 14,
+	481, 738,
+	300, 741,
+	299, 722,
+	426, 629,
+	431, 621,
+	433, 611,
+	434, 444,
+	422, 432,
+	440, 421,
+	438, 679,
+	443, 685,
+	451, 689,
+	458, 690,
+	463, 685,
+	467, 678,
+	466, 178,
+	465, 161,
+	461, 137,
+	452, 119,
+	444, 109,
+	457, 101,
+	469, 87,
+	476, 71,
+	476, 51,
+	467, 33,
+	455, 25,
+	440, 19,
+	422, 18,
+	405, 25,
+	393, 35,
+	386, 52,
+	383, 62,
+	338, 51,
+	291, 47,
+	258, 47,
+	224, 48,
+	175, 59,
+	125, 82,
+	91, 115,
+	72, 139,
+	47, 191,
+	41, 221,
+	40, 441,
+	55, 455,
+	59, 461,
+	54, 467,
+	44, 476,
+	45, 611,
+	48, 621,
+	51, 626,
+	60, 636,
+	180, 721,
+	178, 739,
+	29, 736,
+	28, 16
+	};
+	int point_mitg[30] = {
+		261, 365,
+	266, 356,
+	244, 314,
+	237, 310,
+	230, 311,
+	211, 353,
+	211, 360,
+	217, 365,
+	223, 363,
+	230, 352,
+	238, 349,
+	247, 351,
+	254, 362,
+	255, 367,
+	260, 366
 	};
 
-	chain_carcasa.add(App->physics->CreateChain(0, 7, point_carcasa, 100));
+
+	chain_carcasa.add(App->physics->CreateChain(0, 0, point_carcasa, 114));
+	mitg.add(App->physics->CreateChain(0, 0, point_mitg, 30));
 
 	return ret;
 }
@@ -114,7 +139,8 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update()
 {
 	// If user presses SPACE, enable RayCast
-	App->renderer->Blit(map, 0, 0);
+	App->renderer->Blit(t_map, 0, 0);
+	App->renderer->Blit(t_mitg,206, 308);
 	// The target point of the raycast is the mouse current position (will change over game time)
 	iPoint mouse;
 	mouse.x = App->input->GetMouseX();
@@ -147,8 +173,7 @@ update_status ModuleSceneIntro::Update()
 		c->data->GetPosition(x, y);
 
 		// Always paint boxes texture
-		App->renderer->Blit(box, x, y, NULL, 1.0f, c->data->GetRotation());
-
+	
 		// Are we hitting this box with the raycast?
 		if(ray_on)
 		{

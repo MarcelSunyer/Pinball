@@ -41,7 +41,6 @@ bool ModuleSceneIntro::Start()
 	// This sensor will not make other objects collide with it, but it can tell if it is "colliding" with something else
 	lower_ground_sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT+23, SCREEN_WIDTH, 50);
 	
-	App->physics->CreateRectangleSensor(483,420,19,549);
 	
 	// Add this module (ModuleSceneIntro) as a listener for collisions with the sensor.
 	// In ModulePhysics::PreUpdate(), we iterate over all sensors and (if colliding) we call the function ModuleSceneIntro::OnCollision()

@@ -39,7 +39,7 @@ bool ModuleSceneIntro::Start()
 
 	// Create a big red sensor on the bottom of the screen.
 	// This sensor will not make other objects collide with it, but it can tell if it is "colliding" with something else
-	lower_ground_sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT+23, SCREEN_WIDTH, 50);
+	lower_ground_sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT+23, SCREEN_WIDTH, 50, b2_dynamicBody);
 	
 	
 	// Add this module (ModuleSceneIntro) as a listener for collisions with the sensor.
@@ -99,7 +99,7 @@ bool ModuleSceneIntro::Start()
 	489, 7
 	};
 
-	chain_carcasa.add(App->physics->CreateChain(0, 7, point_carcasa, 100));
+	chain_carcasa.add(App->physics->CreateChain(0, 7, point_carcasa, 100, b2_staticBody));
 
 	return ret;
 }

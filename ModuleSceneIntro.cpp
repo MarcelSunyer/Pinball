@@ -99,7 +99,7 @@ bool ModuleSceneIntro::Start()
 	489, 7
 	};
 
-	chain_carcasa.add(App->physics->CreateChain(10, 7, point_carcasa, 100));
+	chain_carcasa.add(App->physics->CreateChain(0, 7, point_carcasa, 100));
 
 	return ret;
 }

@@ -39,9 +39,6 @@ bool ModulePhysics::Start()
 	// Set this module as a listener for contacts
 	world->SetContactListener(this);
 
-	// Create the main static ground of the scenario: a big circle in the middle of the screen
-	CreateScenarioGround();
-
 	// Create a static, shapeless ground body
 	// This will be used to create joints like a mouse joint
 	b2BodyDef bd;
@@ -210,32 +207,6 @@ bool ModulePhysics::CleanUp()
 	return true;
 }
 
-void ModulePhysics::CreateScenarioGround()
-{
-	// Get coordinates of the screen center and radius
-	int x = SCREEN_WIDTH / 2;
-	int y = SCREEN_HEIGHT / 1.5f;
-	int diameter = SCREEN_WIDTH / 2;
-
-	// Create a static body in the middle of the screen
-	b2BodyDef body;
-	body.type = b2_staticBody;
-	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-
-	// Add this static body to the World
-	b2Body* big_ball = world->CreateBody(&body);
-
-	// Create a big circle shape
-	b2CircleShape shape;
-	shape.m_radius = PIXEL_TO_METERS(diameter) * 0.5f;
-
-	// Create a fixture and associate the circle to it
-	b2FixtureDef fixture;
-	fixture.shape = &shape;
-
-	// Add the ficture (plus shape) to the static body
-	big_ball->CreateFixture(&fixture);
-}
 
 PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
 {
@@ -340,7 +311,7 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size)
 {
 	// Create BODY at position x,y
 	b2BodyDef body;
-	body.type = b2_dynamicBody;
+	body.type = b2_staticBody;;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
 	// Add BODY to the world

@@ -12,6 +12,7 @@ struct Bat
 	bool rightSide;
 };
 
+
 struct Muelle
 {
 	PhysBody* pivot;
@@ -31,4 +32,9 @@ public:
 public:
 	p2List<Bat*> bats;
 	SDL_Rect rectSect = { 48, 250, 64, 20 };
+
+	SDL_Texture* ballTexture;
+
+	p2List<PhysBody*> balls;
+	SDL_Rect circleSect = { 127, 317, 19, 21 };
 };

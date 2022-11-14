@@ -18,10 +18,13 @@ ModulePlayer::~ModulePlayer()
 // Load assets
 bool ModulePlayer::Start()
 {
-	b2Vec2 a = { -0.44, 0 };
-	b2Vec2 b = { 0, 0 };
+	//Load Textures
+	ballTexture = App->textures->Load("Game/pinball/mitg.png");
 
 	//Bats------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	b2Vec2 a = { -0.44, 0 };
+	b2Vec2 b = { 0, 0 };
 	
 	//Bate izquierda-abajo
 	Bat* f1 = new Bat;
@@ -49,6 +52,9 @@ bool ModulePlayer::Start()
 	f2->rightSide = true;
 	App->physics->CreateRevoluteJoint(f2->Rect, aR, f2->Circle, bR, 35.0f);
 	bats.add(f2);
+
+	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 	LOG("Loading player");
 	return true;
@@ -89,6 +95,23 @@ update_status ModulePlayer::Update()
 			f = f->next;
 		}
 	}
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	{
+		balls.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 10, b2_dynamicBody));
+		balls.getLast()->data->listener = this;
+	}
+
+
+	//BLITS
+	p2List_item<PhysBody*>* c = balls.getFirst();
+	while (c != NULL)
+	{
+		int x, y;
+		c->data->GetPosition(x, y);
+		App->renderer->Blit(ballTexture, x, y, &circleSect, false, 1.0f, c->data->GetRotation());
+		c = c->next;
+	}
+
 	return UPDATE_CONTINUE;
 }
 

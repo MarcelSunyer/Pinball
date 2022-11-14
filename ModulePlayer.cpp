@@ -23,6 +23,7 @@ bool ModulePlayer::Start()
 
 	//Bats------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
+	//Bate izquierda-abajo
 	Bat* f1 = new Bat;
 	f1->Circle = App->physics->CreateCircle(173, 675, 4, b2_staticBody);
 	f1->Rect = App->physics->CreateRectangle(163 + rectSect.w / 2, 665 + rectSect.h / 2, rectSect.w, rectSect.h - 10, b2_dynamicBody);
@@ -30,12 +31,24 @@ bool ModulePlayer::Start()
 	App->physics->CreateRevoluteJoint(f1->Rect, a, f1->Circle, b, 35.0f);
 	bats.add(f1);
 
+	//Bate izquierda-arriba
 	Bat* f = new Bat;
 	f->Circle = App->physics->CreateCircle(55, 435, 4, b2_staticBody);
 	f->Rect = App->physics->CreateRectangle(40 + rectSect.w / 2, 420 + rectSect.h / 2, rectSect.w, rectSect.h - 10, b2_dynamicBody);
 	f->rightSide = false;
 	App->physics->CreateRevoluteJoint(f->Rect, a, f->Circle, b, 35.0f);
 	bats.add(f);
+
+	b2Vec2 aR = { 0.44, 0 };
+	b2Vec2 bR = { 0, 0 };
+
+	//Bate derecha
+	Bat* f2 = new Bat;
+	f2->Circle = App->physics->CreateCircle(300, 675, 4, b2_staticBody);
+	f2->Rect = App->physics->CreateRectangle(290 - rectSect.w / 2, 665 + rectSect.h / 2, rectSect.w, rectSect.h - 10, b2_dynamicBody);
+	f2->rightSide = true;
+	App->physics->CreateRevoluteJoint(f2->Rect, aR, f2->Circle, bR, 35.0f);
+	bats.add(f2);
 
 	LOG("Loading player");
 	return true;
@@ -60,6 +73,18 @@ update_status ModulePlayer::Update()
 			if (f->data->rightSide == false)
 			{
 				f->data->Rect->body->ApplyForce({ -3,0 }, { 0,0 }, true);
+			}
+			f = f->next;
+		}
+	}
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	{
+		p2List_item<Bat*>* f = bats.getFirst();
+		while (f != NULL)
+		{
+			if (f->data->rightSide == true)
+			{
+				f->data->Rect->body->ApplyForce({ 3,0 }, { 0,0 }, true);
 			}
 			f = f->next;
 		}

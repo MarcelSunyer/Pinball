@@ -19,7 +19,7 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	//Load Textures
-	ballTexture = App->textures->Load("pinball/mitg.png");
+	ballTexture = App->textures->Load("pinball/ball.png");
 
 	//Bats------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -108,7 +108,7 @@ update_status ModulePlayer::Update()
 	{
 		int x, y;
 		c->data->GetPosition(x, y);
-		App->renderer->Blit(ballTexture, x, y, &circleSect, true, 1.0f, c->data->GetRotation());
+		App->renderer->Blit(ballTexture, x-5, y-5, &circleSect, true, 1.0f, c->data->GetRotation());
 		c = c->next;
 	}
 

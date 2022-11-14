@@ -36,5 +36,5 @@ public:
 	SDL_Texture* ballTexture;
 
 	p2List<PhysBody*> balls;
-	SDL_Rect circleSect = { 127, 317, 19, 21 };
+	SDL_Rect circleSect = { 0, 0, 32, 32 };
 };

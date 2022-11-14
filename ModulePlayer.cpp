@@ -19,7 +19,7 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	//Load Textures
-	ballTexture = App->textures->Load("Game/pinball/mitg.png");
+	ballTexture = App->textures->Load("pinball/mitg.png");
 
 	//Bats------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -108,8 +108,19 @@ update_status ModulePlayer::Update()
 	{
 		int x, y;
 		c->data->GetPosition(x, y);
-		App->renderer->Blit(ballTexture, x, y, &circleSect, false, 1.0f, c->data->GetRotation());
+		App->renderer->Blit(ballTexture, x, y, &circleSect, true, 1.0f, c->data->GetRotation());
 		c = c->next;
+	}
+
+	p2List_item<Bat*>* f = bats.getFirst();
+	while (f != NULL)
+	{
+		int x, y;
+		f->data->Rect->GetPosition(x, y);
+
+		App->renderer->Blit(ballTexture, x, y - 5, &rectSect, f->data->rightSide, 1.0f, f->data->Rect->GetRotation());
+
+		f = f->next;
 	}
 
 	return UPDATE_CONTINUE;

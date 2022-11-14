@@ -23,9 +23,16 @@ bool ModulePlayer::Start()
 
 	//Bats------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
+	Bat* f1 = new Bat;
+	f1->Circle = App->physics->CreateCircle(173, 675, 4, b2_staticBody);
+	f1->Rect = App->physics->CreateRectangle(163 + rectSect.w / 2, 665 + rectSect.h / 2, rectSect.w, rectSect.h - 10, b2_dynamicBody);
+	f1->rightSide = false;
+	App->physics->CreateRevoluteJoint(f1->Rect, a, f1->Circle, b, 35.0f);
+	bats.add(f1);
+
 	Bat* f = new Bat;
-	f->Circle = App->physics->CreateCircle(173, 675, 4, b2_staticBody);
-	f->Rect = App->physics->CreateRectangle(163 + rectSect.w / 2, 665 + rectSect.h / 2, rectSect.w, rectSect.h - 10, b2_dynamicBody);
+	f->Circle = App->physics->CreateCircle(55, 435, 4, b2_staticBody);
+	f->Rect = App->physics->CreateRectangle(40 + rectSect.w / 2, 420 + rectSect.h / 2, rectSect.w, rectSect.h - 10, b2_dynamicBody);
 	f->rightSide = false;
 	App->physics->CreateRevoluteJoint(f->Rect, a, f->Circle, b, 35.0f);
 	bats.add(f);

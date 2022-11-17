@@ -97,7 +97,7 @@ update_status ModulePlayer::Update()
 	}
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		balls.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 10, b2_dynamicBody));
+		balls.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 8, b2_dynamicBody));
 		balls.getLast()->data->listener = this;
 	}
 

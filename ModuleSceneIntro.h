@@ -25,8 +25,19 @@ public:
 	// Lists of physics objects
 	p2List<PhysBody*> circles;
 	p2List<PhysBody*> boxes;
-	p2List<PhysBody*> chain_carcasa;
-	p2List<PhysBody*> mitg;
+	p2List<PhysBody*> collider_carcasa;
+	p2List<PhysBody*> collider_mitg;
+	p2List<PhysBody*> collider_palanca_d;
+	p2List<PhysBody*> collider_palanca_e;
+	p2List<PhysBody*> collider_dreta_s;
+	p2List<PhysBody*> collider_dreta_i;
+	p2List<PhysBody*> collider_esquerra_t;
+	p2List<PhysBody*> collider_pivot_1;
+	p2List<PhysBody*> collider_pivot_2;
+	p2List<PhysBody*> collider_pivot_3;
+	p2List<PhysBody*> collider_pivot_4;
+	p2List<PhysBody*> collider_pivot_5;
+
 
 
 

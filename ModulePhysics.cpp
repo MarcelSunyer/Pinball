@@ -311,7 +311,7 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size, b2Body
 {
 	// Create BODY at position x,y
 	b2BodyDef body;
-	body.type = type;;
+	body.type = type;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
 	// Add BODY to the world
@@ -330,6 +330,7 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, int* points, int size, b2Body
 	// Create FIXTURE
 	b2FixtureDef fixture;
 	fixture.shape = &shape;
+	fixture.density = 1.0f;
 
 	// Add fixture to the BODY
 	b->CreateFixture(&fixture);
@@ -355,7 +356,6 @@ b2RevoluteJoint* ModulePhysics::CreateRevoluteJoint(PhysBody* A, b2Vec2 anchorA,
 	revoluteJointDef.collideConnected = collideConnected;
 	revoluteJointDef.localAnchorA.Set(anchorA.x, anchorA.y);
 	revoluteJointDef.localAnchorB.Set(anchorB.x, anchorB.y);
-	revoluteJointDef.referenceAngle = 0;
 	revoluteJointDef.enableLimit = enableLimit;
 	revoluteJointDef.lowerAngle = -DEG_TO_RAD(angle);
 	revoluteJointDef.upperAngle = DEG_TO_RAD(angle);

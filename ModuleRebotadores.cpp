@@ -17,3 +17,10 @@ ModuleRebotadores::ModuleRebotadores(Application* app, bool start_enabled) : Mod
 ModuleRebotadores::~ModuleRebotadores()
 {}
 
+void ModuleRebotadores::Rebote_1(PhysBody* bodyA, PhysBody* bodyB, int velocity)
+{
+
+}
+
+
+

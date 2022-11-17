@@ -3,6 +3,7 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "Globals.h"
+#include "ModulePhysics.h"
 
 class PhysBody;
 
@@ -32,10 +33,18 @@ public:
 	p2List<PhysBody*> collider_dreta_s;
 	p2List<PhysBody*> collider_dreta_i;
 	p2List<PhysBody*> collider_esquerra_t;
+	
 	p2List<PhysBody*> collider_pivot_i;
 	p2List<PhysBody*> collider_pivot_c;
-	p2List<PhysBody*> collider_flipper_i;
-	p2List<PhysBody*> collider_flipper_d;
+	
+	
+	PhysBody* collider_flipper_i;
+	PhysBody* ref_i;
+	b2RevoluteJoint* collider_flipper_joint_i;
+
+	PhysBody* collider_flipper_d;
+
+
 
 
 

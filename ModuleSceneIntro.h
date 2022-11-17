@@ -34,12 +34,16 @@ public:
 	p2List<PhysBody*> collider_esquerra_t;
 	p2List<PhysBody*> collider_pivot_i;
 	p2List<PhysBody*> collider_pivot_c;
+	p2List<PhysBody*> collider_flipper_i;
+	p2List<PhysBody*> collider_flipper_d;
+
 
 
 
 
 	// Lower ground sensor (will kill all objects passig through it)
 	PhysBody* lower_ground_sensor;
+	
 	PhysBody* prueva;
 	bool sensed;
 
@@ -49,8 +53,10 @@ public:
 	SDL_Texture* t_mitg;
 	SDL_Texture* t_map;
 	SDL_Texture* t_bola;
+	SDL_Texture* t_flipper_e;
 	
-
+	PhysBody* collider_rebotador_1;
+	SDL_Texture* t_rebotador_1;
 	// FX
 	uint bonus_fx;
 

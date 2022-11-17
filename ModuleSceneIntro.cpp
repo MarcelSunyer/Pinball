@@ -11,7 +11,6 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 {
 
 	// Initialise all the internal class variables, at least to NULL pointer
-	t_mitg = t_map = t_carcasa = NULL;
 	ray_on = false;
 	sensed = false;
 	
@@ -33,6 +32,7 @@ bool ModuleSceneIntro::Start()
 	// Load textures
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	t_map = App->textures->Load("pinball/map.png");
+	t_flipper_e = App->textures->Load("pinball/Flipper_esquerre.png");
 
 	// Create a big red sensor on the bottom of the screen.
 	// This sensor will not make other objects collide with it, but it can tell if it is "colliding" with something else
@@ -42,6 +42,8 @@ bool ModuleSceneIntro::Start()
 	// Add this module (ModuleSceneIntro) as a listener for collisions with the sensor.
 	// In ModulePhysics::PreUpdate(), we iterate over all sensors and (if colliding) we call the function ModuleSceneIntro::OnCollision()
 	lower_ground_sensor->listener = this;
+
+
 	
 	int collider_point_carcasa[114] = {
 		28, 15,	481, 14, 481, 738, 300, 741, 299, 722, 426, 629, 431, 621, 433, 611,
@@ -61,16 +63,19 @@ bool ModuleSceneIntro::Start()
 		399, 612, 316, 676,	307, 664, 313, 658, 330, 647, 386, 605, 388, 600,
 		385, 531, 390, 523, 396, 518, 403, 518, 407, 522, 409, 531, 408, 544,
 		406, 595, 404, 604, 401, 609 };
+
 	int collider_palanca_esquerra[32] = {
 		92, 531, 89, 600, 91, 605, 170, 660, 170, 667, 163, 672,  156, 670, 
 		83, 619, 76, 609, 71, 597, 69, 567, 70, 525, 73, 518, 79, 517, 84, 521,
 		88, 525	};
+
 	int collider_dreta_superior[64] = {
 		417, 378, 425, 381, 428, 386, 429, 393,  433, 395, 440, 390, 441, 218, 
 		441, 157, 431, 132, 421, 116, 405, 102, 390, 92, 370, 83, 348, 78, 324, 75,
 		304, 76, 297, 79, 308, 83, 318, 88,	335, 97, 356, 112, 374, 128, 394, 154,
 		408, 179, 423, 223, 428, 254, 429, 286, 426, 313, 418, 345, 411, 365, 410, 372,
 		415, 377 };
+
 	int collider_dreta_inferior[88] = {
 		341, 336, 342, 330, 346, 324, 353, 317, 364, 306, 371, 291, 379, 272, 383, 255,
 		385, 234, 381, 212, 374, 191, 363, 173, 347, 155, 331, 142, 315, 133, 303, 127,
@@ -78,6 +83,7 @@ bool ModuleSceneIntro::Start()
 		347, 136, 357, 145, 365, 155, 372, 164, 378, 172, 383, 181, 390, 197, 396, 211,
 		398, 226, 400, 241, 399, 266, 394, 292, 385, 312, 376, 328, 369, 340, 362, 349,
 		353, 351, 345, 348, 341, 341, 341, 337 };
+
 	int collider_esquerra[116] = {
 		183, 262, 187, 258, 188, 252, 184, 244, 180, 233, 177, 218, 176, 204, 178, 185,
 		182, 171, 187, 160, 195, 151, 203, 145, 210, 142, 213, 138, 213, 130, 213, 98,
@@ -87,22 +93,35 @@ bool ModuleSceneIntro::Start()
 		153, 157, 164, 145, 173, 139, 182, 139, 188, 143, 189, 150, 186, 155, 181, 161,
 		177, 168, 173, 176, 167, 189, 163, 205, 163, 216, 164, 230, 166, 244, 170, 254,
 		177, 261, 181, 262 };
+
 	int collider_pivote_izquiera[14] = {
 		61, 258, 66, 261, 72, 259, 72, 239, 67, 235, 61, 239, 61, 257 };
+
 	int collider_pivote_centre[14] = {
 	237, 113, 240, 109, 240, 94, 236, 90, 232, 93, 232, 109, 236, 113 };
 
+	int collider_flipper_dreta[22] = {
+		223, 698, 219, 700, 171, 682, 166, 673, 167, 667, 173, 664, 180, 664, 191, 672,
+		209, 680, 223, 688, 225, 695 };
+
 	collider_carcasa.add(App->physics->CreateChain(0, 0, collider_point_carcasa, 114, b2_staticBody));
 	collider_mitg.add(App->physics->CreateChain(0, 0, collider_point_mitg, 30, b2_staticBody));
+
 	collider_palanca_d.add(App->physics->CreateChain(0, 0, collider_palanca_dreta, 34, b2_staticBody));
 	collider_palanca_e.add(App->physics->CreateChain(0, 0, collider_palanca_esquerra, 32, b2_staticBody));
+
 	collider_dreta_s.add(App->physics->CreateChain(0, 0, collider_dreta_superior, 64, b2_staticBody));
 	collider_dreta_i.add(App->physics->CreateChain(0, 0, collider_dreta_inferior, 88, b2_staticBody));
 	collider_esquerra_t.add(App->physics->CreateChain(0, 0, collider_esquerra, 116, b2_staticBody));
+
 	collider_pivot_i.add(App->physics->CreateChain(0, 0, collider_pivote_izquiera, 14, b2_staticBody));
 	collider_pivot_i.add(App->physics->CreateChain(29, 0, collider_pivote_izquiera, 14, b2_staticBody));
 	collider_pivot_i.add(App->physics->CreateChain(0, 0, collider_pivote_centre, 14, b2_staticBody));
 	collider_pivot_i.add(App->physics->CreateChain(30, 0, collider_pivote_centre, 14, b2_staticBody));
+	collider_flipper_d.add(App->physics->CreateChain(0, 0, collider_flipper_dreta, 22, b2_kinematicBody));
+
+	t_rebotador_1 = App->textures->Load("pinball/bola1.png");
+	//Load Textures
 
 	return ret;
 }
@@ -117,70 +136,27 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update()
 {
 	App->renderer->Blit(t_map, 0, 0);
+	App->renderer->Blit(t_rebotador_1, 261, 192);
 	// The target point of the raycast is the mouse current position (will change over game time)
 	iPoint mouse;
 	mouse.x = App->input->GetMouseX();
 	mouse.y = App->input->GetMouseY();
+	App->physics->CreateCircle(261, 192, 10, b2_staticBody);
 
-	// Total distance of the raycast reference segment
-	int ray_hit = ray.DistanceTo(mouse);
-
-	// Declare a vector. We will draw the normal to the hit surface (if we hit something)
-	fVector normal(0.0f, 0.0f);
-
-	// All draw functions ------------------------------------------------------
-
-	// Circles
 	p2List_item<PhysBody*>* c = circles.getFirst();
-	while(c != NULL)
-	{
-		int x, y;
-		c->data->GetPosition(x, y);
 
-		// If mouse is over this circle, paint the circle's texture
-		
-	}
-
-	// Boxes
-	c = boxes.getFirst();
-	while(c != NULL)
-	{
-		int x, y;
-		c->data->GetPosition(x, y);
-
-		// Always paint boxes texture
 	
-		// Are we hitting this box with the raycast?
-		if(ray_on)
-		{
-			// Test raycast over the box, return fraction and normal vector
-			int hit = c->data->RayCast(ray.x, ray.y, mouse.x, mouse.y, normal.x, normal.y);
-			if(hit >= 0)
-				ray_hit = hit;
-		}
-		c = c->next;
-	}
+	App->renderer->Blit(t_flipper_e, 160, 663);
+
+
+
 
 	
 	
 
-	// Raycasts -----------------
-	if(ray_on == true)
-	{
-		// Compute the vector from the raycast origin up to the contact point (if we're hitting anything; otherwise this is the reference length)
-		fVector destination(mouse.x-ray.x, mouse.y-ray.y);
-		destination.Normalize();
-		destination *= ray_hit;
+	
 
-		// Draw a line from origin to the hit point (or reference length if we are not hitting anything)
-		App->renderer->DrawLine(ray.x, ray.y, ray.x + destination.x, ray.y + destination.y, 255, 255, 255);
-
-		// If we are hitting something with the raycast, draw the normal vector to the contact point
-		if(normal.x != 0.0f)
-			App->renderer->DrawLine(ray.x + destination.x, ray.y + destination.y, ray.x + destination.x + normal.x * 25.0f, ray.y + destination.y + normal.y * 25.0f, 100, 255, 100);
-	}
-
-	// Keep playing
+	
 	return UPDATE_CONTINUE;
 }
 
@@ -190,4 +166,5 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	App->audio->PlayFx(bonus_fx);
 
 	// Do something else. You can also check which bodies are colliding (sensor? ball? player?)
+	
 }

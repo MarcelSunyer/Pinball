@@ -87,14 +87,10 @@ bool ModuleSceneIntro::Start()
 		153, 157, 164, 145, 173, 139, 182, 139, 188, 143, 189, 150, 186, 155, 181, 161,
 		177, 168, 173, 176, 167, 189, 163, 205, 163, 216, 164, 230, 166, 244, 170, 254,
 		177, 261, 181, 262 };
-	int collider_pivote_5[12] = {
-		96, 235,
-	99, 238,
-	99, 255,
-	92, 255,
-	92, 238,
-	95, 235 };
-
+	int collider_pivote_izquiera[14] = {
+		61, 258, 66, 261, 72, 259, 72, 239, 67, 235, 61, 239, 61, 257 };
+	int collider_pivote_centre[14] = {
+	237, 113, 240, 109, 240, 94, 236, 90, 232, 93, 232, 109, 236, 113 };
 
 	collider_carcasa.add(App->physics->CreateChain(0, 0, collider_point_carcasa, 114, b2_staticBody));
 	collider_mitg.add(App->physics->CreateChain(0, 0, collider_point_mitg, 30, b2_staticBody));
@@ -103,8 +99,10 @@ bool ModuleSceneIntro::Start()
 	collider_dreta_s.add(App->physics->CreateChain(0, 0, collider_dreta_superior, 64, b2_staticBody));
 	collider_dreta_i.add(App->physics->CreateChain(0, 0, collider_dreta_inferior, 88, b2_staticBody));
 	collider_esquerra_t.add(App->physics->CreateChain(0, 0, collider_esquerra, 116, b2_staticBody));
-	collider_pivot_5.add(App->physics->CreateChain(-28, 0, collider_pivote_5, 12, b2_staticBody));
-	collider_pivot_5.add(App->physics->CreateChain(0, 0, collider_pivote_5, 12, b2_staticBody));
+	collider_pivot_i.add(App->physics->CreateChain(0, 0, collider_pivote_izquiera, 14, b2_staticBody));
+	collider_pivot_i.add(App->physics->CreateChain(29, 0, collider_pivote_izquiera, 14, b2_staticBody));
+	collider_pivot_i.add(App->physics->CreateChain(0, 0, collider_pivote_centre, 14, b2_staticBody));
+	collider_pivot_i.add(App->physics->CreateChain(30, 0, collider_pivote_centre, 14, b2_staticBody));
 
 	return ret;
 }

@@ -32,11 +32,8 @@ public:
 	p2List<PhysBody*> collider_dreta_s;
 	p2List<PhysBody*> collider_dreta_i;
 	p2List<PhysBody*> collider_esquerra_t;
-	p2List<PhysBody*> collider_pivot_1;
-	p2List<PhysBody*> collider_pivot_2;
-	p2List<PhysBody*> collider_pivot_3;
-	p2List<PhysBody*> collider_pivot_4;
-	p2List<PhysBody*> collider_pivot_5;
+	p2List<PhysBody*> collider_pivot_i;
+	p2List<PhysBody*> collider_pivot_c;
 
 
 

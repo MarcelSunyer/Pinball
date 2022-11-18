@@ -110,30 +110,37 @@ bool ModuleSceneIntro::Start()
 	10, 9,
 	7, 15 };
 
-	//collider_carcasa.add(App->physics->CreateChain(0, 0, collider_point_carcasa, 114, b2_staticBody));
-	//collider_mitg.add(App->physics->CreateChain(0, 0, collider_point_mitg, 30, b2_staticBody));
+	collider_carcasa = App->physics->CreateChain(0, 0, collider_point_carcasa, 114, b2_staticBody);
+	collider_mitg = App->physics->CreateChain(0, 0, collider_point_mitg, 30, b2_staticBody);
 
-	//collider_palanca_d.add(App->physics->CreateChain(0, 0, collider_palanca_dreta, 34, b2_staticBody));
-	//collider_palanca_e.add(App->physics->CreateChain(0, 0, collider_palanca_esquerra, 32, b2_staticBody));
+	collider_palanca_d = App->physics->CreateChain(0, 0, collider_palanca_dreta, 34, b2_staticBody);
+	collider_palanca_e = App->physics->CreateChain(0, 0, collider_palanca_esquerra, 32, b2_staticBody);
 
-	/*collider_dreta_s.add(App->physics->CreateChain(0, 0, collider_dreta_superior, 64, b2_staticBody));
-	collider_dreta_i.add(App->physics->CreateChain(0, 0, collider_dreta_inferior, 88, b2_staticBody));
-	collider_esquerra_t.add(App->physics->CreateChain(0, 0, collider_esquerra, 116, b2_staticBody));
+	collider_dreta_s = App->physics->CreateChain(0, 0, collider_dreta_superior, 64, b2_staticBody);
+	collider_dreta_i = App->physics->CreateChain(0, 0, collider_dreta_inferior, 88, b2_staticBody);
+	collider_esquerra_t = App->physics->CreateChain(0, 0, collider_esquerra, 116, b2_staticBody);
 
-	collider_pivot_i.add(App->physics->CreateChain(0, 0, collider_pivote_izquiera, 14, b2_staticBody));
-	collider_pivot_i.add(App->physics->CreateChain(29, 0, collider_pivote_izquiera, 14, b2_staticBody));
-	collider_pivot_i.add(App->physics->CreateChain(0, 0, collider_pivote_centre, 14, b2_staticBody));
-	collider_pivot_i.add(App->physics->CreateChain(30, 0, collider_pivote_centre, 14, b2_staticBody));*/
+	collider_pivot_i = App->physics->CreateChain(15, -1, collider_pivote_izquiera, 14, b2_staticBody);
+	collider_pivot_i = App->physics->CreateChain(0, 0, collider_pivote_centre, 14, b2_staticBody);
+	collider_pivot_i = App->physics->CreateChain(30, 0, collider_pivote_centre, 14, b2_staticBody);
 
-	ref_i = App->physics->CreateRectangle(171, 665, 10, 10, b2_staticBody);
-	collider_flipper_i = App->physics->CreateChain(171, 665, collider_flipper_dreta, 16, b2_dynamicBody);
-	//collider_flipper_i = App->physics->CreateRectangle(191, 665, 10, 10, b2_dynamicBody);
-	collider_flipper_joint_i = App->physics->CreateRevoluteJoint(ref_i, b2Vec2(0, 0), collider_flipper_i, b2Vec2(-0.0, 0), 0, false, false);
-	collider_flipper_joint_i->SetLimits(DEG_TO_RAD(-9000), DEG_TO_RAD(3000));
-	collider_flipper_joint_i->EnableLimit(false);
-	collider_flipper_joint_i->EnableMotor(true);
-	collider_flipper_joint_i->SetMaxMotorTorque(10000 * DEGTORAD);
-	collider_flipper_joint_i->SetMotorSpeed(360 * DEGTORAD);
+
+	//Flipper esquerra
+	ref_i = App->physics->CreateRectangle(180, 675, 10, 10, b2_staticBody);
+	collider_flipper_i = App->physics->CreateRectangle(210, 660, 60, 15, b2_dynamicBody);
+	collider_flipper_joint_i = App->physics->CreateRevoluteJoint(ref_i, b2Vec2(0,0), collider_flipper_i, b2Vec2(-0.4, 0), 0, false, false);
+	
+	collider_flipper_joint_i->EnableLimit(true);
+	collider_flipper_joint_i->SetLimits(-0.5, 0.3);
+	
+	//Flipper dreta
+	ref_d = App->physics->CreateRectangle(300, 680, 10, 10, b2_staticBody);
+	collider_flipper_d = App->physics->CreateRectangle(230, 660, 60, 15, b2_dynamicBody);
+	collider_flipper_joint_d = App->physics->CreateRevoluteJoint(ref_d, b2Vec2(0,0), collider_flipper_d, b2Vec2(0.4, 0.07), 0, false, false);
+
+	collider_flipper_joint_d->EnableLimit(true);
+	collider_flipper_joint_d->SetLimits(-0.5, 0.3);
+
 
 	t_rebotador_1 = App->textures->Load("pinball/bola1.png");
 	//Load Textures
@@ -158,11 +165,19 @@ update_status ModuleSceneIntro::Update()
 	mouse.y = App->input->GetMouseY();
 
 	
-	if(App->input->GetKey(SDL_SCANCODE_2)==KEY_DOWN)
-		collider_flipper_i->body->ApplyTorque(50, true);
-	
-	LOG("%f", RAD_TO_DEG(collider_flipper_i->body->GetAngle()));
+	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+		collider_flipper_i->body->ApplyTorque(-50, true);
+	else
+	{
+		collider_flipper_i->body->ApplyTorque(20, true);
+	}
 
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+		collider_flipper_d->body->ApplyTorque(50, true);
+	else
+	{
+		collider_flipper_d->body->ApplyTorque(-20, true);
+	}
 
 	App->renderer->Blit(t_flipper_e, 160, 663);
 	

@@ -24,25 +24,29 @@ public:
 public:
 
 	// Lists of physics objects
-	p2List<PhysBody*> circles;
-	p2List<PhysBody*> boxes;
-	p2List<PhysBody*> collider_carcasa;
-	p2List<PhysBody*> collider_mitg;
-	p2List<PhysBody*> collider_palanca_d;
-	p2List<PhysBody*> collider_palanca_e;
-	p2List<PhysBody*> collider_dreta_s;
-	p2List<PhysBody*> collider_dreta_i;
-	p2List<PhysBody*> collider_esquerra_t;
+	PhysBody* circles;
+	PhysBody* boxes;
+	PhysBody* collider_carcasa;
+	PhysBody* collider_mitg;
+	PhysBody* collider_palanca_d;
+	PhysBody* collider_palanca_e;
+	PhysBody* collider_dreta_s;
+	PhysBody* collider_dreta_i;
+	PhysBody* collider_esquerra_t;
 	
-	p2List<PhysBody*> collider_pivot_i;
-	p2List<PhysBody*> collider_pivot_c;
+	PhysBody* collider_pivot_i;
+	PhysBody* collider_pivot_c;
 	
 	
 	PhysBody* collider_flipper_i;
 	PhysBody* ref_i;
 	b2RevoluteJoint* collider_flipper_joint_i;
-
+	
 	PhysBody* collider_flipper_d;
+	PhysBody* ref_d;
+	b2RevoluteJoint* collider_flipper_joint_d;
+
+	
 
 
 

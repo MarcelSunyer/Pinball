@@ -37,7 +37,14 @@ public:
 	PhysBody* collider_pivot_i;
 	PhysBody* collider_pivot_c;
 	
+	PhysBody* collider_inici_1;
+	PhysBody* collider_inici_2;
 	
+	PhysBody* collider_detector_i;
+
+
+
+
 	PhysBody* collider_flipper_i;
 	PhysBody* ref_i;
 	b2RevoluteJoint* collider_flipper_joint_i;
@@ -67,6 +74,8 @@ public:
 	SDL_Texture* t_map;
 	SDL_Texture* t_bola;
 	SDL_Texture* t_flipper_e;
+	SDL_Texture* t_flipper_d;
+
 	
 	PhysBody* collider_rebotador_1;
 	SDL_Texture* t_rebotador_1;

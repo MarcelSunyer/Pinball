@@ -33,6 +33,7 @@ bool ModuleSceneIntro::Start()
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	t_map = App->textures->Load("pinball/map.png");
 	t_flipper_e = App->textures->Load("pinball/Flipper_esquerre.png");
+	t_flipper_d = App->textures->Load("pinball/Flipper_dreta.png");
 
 	// Create a big red sensor on the bottom of the screen.
 	// This sensor will not make other objects collide with it, but it can tell if it is "colliding" with something else
@@ -109,6 +110,7 @@ bool ModuleSceneIntro::Start()
 	18, 6,
 	10, 9,
 	7, 15 };
+	
 
 	collider_carcasa = App->physics->CreateChain(0, 0, collider_point_carcasa, 114, b2_staticBody);
 	collider_mitg = App->physics->CreateChain(0, 0, collider_point_mitg, 30, b2_staticBody);
@@ -124,6 +126,19 @@ bool ModuleSceneIntro::Start()
 	collider_pivot_i = App->physics->CreateChain(0, 0, collider_pivote_centre, 14, b2_staticBody);
 	collider_pivot_i = App->physics->CreateChain(30, 0, collider_pivote_centre, 14, b2_staticBody);
 
+	
+	collider_detector_i = App->physics->CreateRectangleSensor(455, 250, 20, 10, b2_staticBody);
+	
+	
+	collider_inici_1 = App->physics->CreateRectangle(455,420,25,5, b2_staticBody); 
+	collider_inici_1 = App->physics->CreateRectangle(462, 415, 7, 5, b2_staticBody); 
+
+
+	
+	
+
+
+	
 
 	//Flipper esquerra
 	ref_i = App->physics->CreateRectangle(180, 675, 10, 10, b2_staticBody);
@@ -141,9 +156,10 @@ bool ModuleSceneIntro::Start()
 	collider_flipper_joint_d->EnableLimit(true);
 	collider_flipper_joint_d->SetLimits(-0.5, 0.3);
 
-
-	t_rebotador_1 = App->textures->Load("pinball/bola1.png");
 	//Load Textures
+	t_rebotador_1 = App->textures->Load("pinball/bola1.png");
+	
+	
 
 	return ret;
 }
@@ -157,29 +173,44 @@ bool ModuleSceneIntro::CleanUp()
 
 update_status ModuleSceneIntro::Update()
 {
+	//Textura flipper esquerra
+	SDL_Rect flipper_i;
+	flipper_i.x = 0;
+	flipper_i.y = 0;
+	flipper_i.w = 67;
+	flipper_i.h = 26;
 	App->renderer->Blit(t_map, 0, 0);
-	App->renderer->Blit(t_rebotador_1, 261, 192);
+	int angle_flipper_i = collider_flipper_i->body->GetAngle()*RADTODEG;
+	App->renderer->Blit(t_flipper_e, 168, 660, &flipper_i, 1, angle_flipper_i, 10, 13);
+	
+	//Textura flipper dreta
+	SDL_Rect flipper_d;
+	flipper_d.x = 0;
+	flipper_d.y = 0;
+	flipper_d.w = 67;
+	flipper_d.h = 26;
+	int angle_flipper_d = collider_flipper_d->body->GetAngle() * RADTODEG;
+	App->renderer->Blit(t_flipper_d, 245, 660, &flipper_d, 1, angle_flipper_d, 56, 12);
+	
+	
 	// The target point of the raycast is the mouse current position (will change over game time)
 	iPoint mouse;
 	mouse.x = App->input->GetMouseX();
 	mouse.y = App->input->GetMouseY();
-
 	
 	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		collider_flipper_i->body->ApplyTorque(-50, true);
+		collider_flipper_i->body->ApplyTorque(-70, true);
 	else
 	{
 		collider_flipper_i->body->ApplyTorque(20, true);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		collider_flipper_d->body->ApplyTorque(50, true);
+		collider_flipper_d->body->ApplyTorque(70, true);
 	else
 	{
 		collider_flipper_d->body->ApplyTorque(-20, true);
 	}
-
-	App->renderer->Blit(t_flipper_e, 160, 663);
 	
 	return UPDATE_CONTINUE;
 }

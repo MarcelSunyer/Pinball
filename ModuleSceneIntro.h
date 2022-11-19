@@ -37,8 +37,9 @@ public:
 	PhysBody* collider_pivot_i;
 	PhysBody* collider_pivot_c;
 	
-	PhysBody* collider_inici_1;
-	PhysBody* collider_inici_2;
+	
+	p2List <PhysBody*> collider_inici_1;
+	p2List <PhysBody*> collider_inici_2;
 	
 	PhysBody* collider_detector_i;
 
@@ -53,7 +54,9 @@ public:
 	PhysBody* ref_d;
 	b2RevoluteJoint* collider_flipper_joint_d;
 
-	
+	PhysBody* disparo;
+	PhysBody* ref_dis;
+	b2RevoluteJoint* disparo_p;
 
 
 

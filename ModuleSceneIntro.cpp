@@ -129,17 +129,6 @@ bool ModuleSceneIntro::Start()
 	
 	collider_detector_i = App->physics->CreateRectangleSensor(455, 250, 20, 10, b2_staticBody);
 	
-	
-	collider_inici_1 = App->physics->CreateRectangle(455,420,25,5, b2_staticBody); 
-	collider_inici_1 = App->physics->CreateRectangle(462, 415, 7, 5, b2_staticBody); 
-
-
-	
-	
-
-
-	
-
 	//Flipper esquerra
 	ref_i = App->physics->CreateRectangle(180, 675, 10, 10, b2_staticBody);
 	collider_flipper_i = App->physics->CreateRectangle(210, 660, 60, 15, b2_dynamicBody);
@@ -155,6 +144,15 @@ bool ModuleSceneIntro::Start()
 
 	collider_flipper_joint_d->EnableLimit(true);
 	collider_flipper_joint_d->SetLimits(-0.5, 0.3);
+
+	ref_dis = App->physics->CreateRectangle(455, 660, 5, 30, b2_staticBody);
+	disparo = App->physics->CreateRectangle(450, 644, 27, 5, b2_dynamicBody);
+	disparo_p = App->physics->CreateRevoluteJoint(ref_dis, b2Vec2(0, -0.3), disparo, b2Vec2(0, 0), 0, false, false);
+
+	disparo_p->EnableLimit(true);
+	disparo_p->SetLimits(-1, 1);
+
+
 
 	//Load Textures
 	t_rebotador_1 = App->textures->Load("pinball/bola1.png");
@@ -198,6 +196,12 @@ update_status ModuleSceneIntro::Update()
 	mouse.x = App->input->GetMouseX();
 	mouse.y = App->input->GetMouseY();
 	
+	
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+		disparo->body->ApplyForce(b2Vec2(0,4), (b2Vec2(10, 2.5)),true);
+	
+
+
 	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		collider_flipper_i->body->ApplyTorque(-70, true);
 	else
@@ -220,6 +224,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	// Play Audio FX on every collision, regardless of who is colliding
 	App->audio->PlayFx(bonus_fx);
 
+	
 	// Do something else. You can also check which bodies are colliding (sensor? ball? player?)
 	
 }

@@ -34,6 +34,7 @@ public:
 	SDL_Rect rectSect = { 48, 250, 64, 20 };
 
 	SDL_Texture* ballTexture;
+	int pelota = 0;
 
 	p2List<PhysBody*> balls;
 	SDL_Rect circleSect = { 0, 0, 30, 30 };

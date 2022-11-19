@@ -22,10 +22,7 @@ bool ModulePlayer::Start()
 	//Load Textures
 	ballTexture = App->textures->Load("pinball/ball.png");
 	
-
-
 	
-
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -46,11 +43,13 @@ update_status ModulePlayer::Update()
 {
 	
 	
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN && pelota == 0)
 	{
-		balls.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 10, b2_dynamicBody));
+		balls.add(App->physics->CreateCircle(455 , 640, 10, b2_dynamicBody));
 		balls.getLast()->data->listener = this;
+		pelota += 1;
 	}
+
 
 	//BLITS
 	p2List_item<PhysBody*>* c = balls.getFirst();

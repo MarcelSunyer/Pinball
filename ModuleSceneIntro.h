@@ -96,6 +96,7 @@ public:
 	SDL_Texture* t_parche;
 	SDL_Texture* t_numeros;
 	SDL_Texture* startSprite;
+	SDL_Texture* finishSprite;
 
 	//score
 	uint score = 0;
@@ -107,7 +108,7 @@ public:
 	int posicioVidesX = 260;
 	int posicioVidesY = 30;
 
-	int ball_count = 0;
+	int ball_count;
 
 	bool lose = false;
 	bool start = true;

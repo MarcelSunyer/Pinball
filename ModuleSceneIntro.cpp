@@ -52,6 +52,7 @@ bool ModuleSceneIntro::Start()
 	t_parche = App->textures->Load("pinball/parche.png");
 	t_numeros = App->textures->Load("pinball/numeros.png");
 	startSprite = App->textures->Load("pinball/Start.png");
+	finishSprite = App->textures->Load("pinball/lose.png");
 
 
 
@@ -300,6 +301,7 @@ update_status ModuleSceneIntro::Update()
 	}
 
 	//scores 
+	
 
 	if (!lose && !start) {
 
@@ -315,6 +317,7 @@ update_status ModuleSceneIntro::Update()
 		//FontDraw(ball_count, 1, posicioVidesX, posicioVidesY, 0);
 	}
 
+	
 
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && ball_count == 0 && !lose) {
 
@@ -322,14 +325,30 @@ update_status ModuleSceneIntro::Update()
 		start = false;
 		score = 0;
 		ball_count = 3;
+
+		
+	}
+	if (!start && ball_count == 0) {
+		lose = true;
 	}
 
 	if (start) {
 		App->renderer->Blit(startSprite, 0, 0);
 	}
-	
+
+	if (lose) {
+		
+		App->renderer->Blit(finishSprite, 0, 0);
+		sprintf_s(scoreText, 10, "%5d", score);
+		App->fonts->BlitText(165, 280, scoreFont, scoreText);
+		
+	}
+
+
 	return UPDATE_CONTINUE;
 }
+
+
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {

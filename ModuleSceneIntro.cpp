@@ -344,6 +344,15 @@ update_status ModuleSceneIntro::Update()
 		
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && lose) {
+
+		start = false;
+		lose = false;
+		score = 0;
+		ball_count = 3;
+
+	}
+	
 
 	return UPDATE_CONTINUE;
 }

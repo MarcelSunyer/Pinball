@@ -88,6 +88,8 @@ public:
 	SDL_Texture* t_flipper_d;
 	SDL_Texture* t_alien;
 	SDL_Texture* t_meteorito;
+	SDL_Texture* t_kicker;
+	SDL_Texture* t_parche;
 
 	// FX
 	uint bonus_fx;

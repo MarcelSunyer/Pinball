@@ -35,6 +35,8 @@ bool ModuleSceneIntro::Start()
 	t_flipper_e = App->textures->Load("pinball/Flipper_esquerre.png");
 	t_flipper_d = App->textures->Load("pinball/Flipper_dreta.png");
 	t_alien = App->textures->Load("pinball/Alien.png");
+	t_kicker = App->textures->Load("pinball/muelle.png");
+	t_parche = App->textures->Load("pinball/parche.png");
 
 
 	// Create a big red sensor on the bottom of the screen.
@@ -186,7 +188,7 @@ bool ModuleSceneIntro::CleanUp()
 }
 
 update_status ModuleSceneIntro::Update()
-{
+{	
 	//Textura flipper esquerra
 	SDL_Rect flipper_i;
 	flipper_i.x = 0;
@@ -212,7 +214,10 @@ update_status ModuleSceneIntro::Update()
 	mouse.x = App->input->GetMouseX();
 	mouse.y = App->input->GetMouseY();
 	
-	
+	// Blitting kicker (Muelle)
+	int kickerX, kickerY;
+	disparo->GetPosition(kickerX, kickerY);
+	App->renderer->Blit(t_kicker, kickerX-5, kickerY, false);
 	
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
@@ -246,6 +251,8 @@ update_status ModuleSceneIntro::Update()
 		collider_flipper_d->body->ApplyTorque(-20, true);
 	}
 	
+	App->renderer->Blit(t_parche, 410, 600);
+
 	return UPDATE_CONTINUE;
 }
 

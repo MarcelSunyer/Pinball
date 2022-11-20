@@ -201,18 +201,8 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update()
 {	
 	
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && ball_count == 0 && !lose) {
-		
-		//Borrar el PRESS ENTER TO START
-		start = false;
-		score = 0;
-		ball_count = 3;
-	}
 
-	if (start) {
-		App->renderer->Blit(startSprite, 0, 0);
-	}
-
+	
 	//Textura flipper esquerra
 	SDL_Rect flipper_i;
 	flipper_i.x = 0;
@@ -279,15 +269,32 @@ update_status ModuleSceneIntro::Update()
 
 	return UPDATE_CONTINUE;
 
+	//scores 
+
+	if (!lose && !start) {
+
+
+		//Imprimir Score
+		FontDraw(score, 4, posicioFont, posicioFontY, 30);
+
+		//Imprimir Vides
+		FontDraw(ball_count, 1, posicioVidesX, posicioVidesY, 0);
+	}
+
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && ball_count == 0 && !lose) {
+
+		//Borrar el PRESS ENTER TO START
+		start = false;
+		score = 0;
+		ball_count = 3;
+	}
+
+	if (start) {
+		App->renderer->Blit(startSprite, 0, 0);
+	}
+
 	
-	//score
-
-
-	//Imprimir Score
-	FontDraw(score, 4, posicioFont, posicioFontY, 20);
-
-	//Imprimir Vides
-	FontDraw(ball_count, 1, posicioVidesX, posicioVidesY, 0);
 }
 
 void ModuleSceneIntro::FontDraw(int score, int n, int posX, int posY, int separacio) {

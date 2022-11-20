@@ -271,7 +271,15 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(t_parche, 410, 600);
 
 	
+	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+	{
+		ball_count++;
+	}
 
+	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	{
+		ball_count--;
+	}
 	//scores 
 
 	if (!lose && !start) {

@@ -29,14 +29,22 @@ bool ModuleSceneIntro::Start()
 	// Set camera position
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
+	
+
 	// Load textures
+
+	
+
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	t_map = App->textures->Load("pinball/map.png");
+	t_bola = App->textures->Load("pinball/ball.png");
 	t_flipper_e = App->textures->Load("pinball/Flipper_esquerre.png");
 	t_flipper_d = App->textures->Load("pinball/Flipper_dreta.png");
 	t_alien = App->textures->Load("pinball/Alien.png");
 	t_kicker = App->textures->Load("pinball/muelle.png");
 	t_parche = App->textures->Load("pinball/parche.png");
+	t_numeros = App->textures->Load("pinball/numeros.png");
+
 
 
 	// Create a big red sensor on the bottom of the screen.
@@ -189,6 +197,22 @@ bool ModuleSceneIntro::CleanUp()
 
 update_status ModuleSceneIntro::Update()
 {	
+	
+	//score
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && ball_count == 0 && !lose) {
+
+		/*int x, y;
+		circles.getfirst()->data->getposition(x, y);
+		app->renderer->blit(t_bola, x, y);*/
+
+
+		//Imprimir Score
+		FontDraw(score, 4, posicioFont, posicioFontY, 30, 1);
+
+		//Imprimir Vides
+		FontDraw(ball_count, 1, posicioVidesX, posicioVidesY, 0, 0.6);
+	}
+
 	//Textura flipper esquerra
 	SDL_Rect flipper_i;
 	flipper_i.x = 0;
@@ -254,6 +278,69 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(t_parche, 410, 600);
 
 	return UPDATE_CONTINUE;
+
+	
+
+}
+
+void ModuleSceneIntro::FontDraw(int score, int n, int posX, int posY, int separacio, float scale) {
+	int initialPosX = posX;
+	int scoreCopia = score;
+	int scoreArray[4];
+	for (int j = 0; j < n; ++j) {
+		scoreArray[j] = scoreCopia % 10;
+		scoreCopia /= 10;
+	}
+
+	SDL_Rect rect0 = { 259, 65, 33, 40 };
+	SDL_Rect rect1 = { 25, 11, 20, 38 };
+	SDL_Rect rect2 = { 80, 10, 29, 40 };
+	SDL_Rect rect3 = { 141, 10, 30, 40 };
+	SDL_Rect rect4 = { 200, 11, 31, 38 };
+	SDL_Rect rect5 = { 261, 10, 29, 40 };
+	SDL_Rect rect6 = { 19, 65, 32, 40 };
+	SDL_Rect rect7 = { 82, 65, 26, 40 };
+	SDL_Rect rect8 = { 140, 65, 31, 40 };
+	SDL_Rect rect9 = { 199, 65, 32, 40 };
+
+	for (int k = 0; k < n; ++k) {
+
+		switch (scoreArray[k]) {
+		case 0:
+			App->renderer->Blit(t_numeros, posX, posY, &rect0, scale);
+			break;
+		case 1:
+			App->renderer->Blit(t_numeros, posX, posY, &rect1, scale);
+			break;
+		case 2:
+			App->renderer->Blit(t_numeros, posX, posY, &rect2, scale);
+			break;
+		case 3:
+			App->renderer->Blit(t_numeros, posX, posY, &rect3, scale);
+			break;
+		case 4:
+			App->renderer->Blit(t_numeros, posX, posY, &rect4, scale);
+			break;
+		case 5:
+			App->renderer->Blit(t_numeros, posX, posY, &rect5, scale);
+			break;
+		case 6:
+			App->renderer->Blit(t_numeros, posX, posY, &rect6, scale);
+			break;
+		case 7:
+			App->renderer->Blit(t_numeros, posX, posY, &rect7, scale);
+			break;
+		case 8:
+			App->renderer->Blit(t_numeros, posX, posY, &rect8, scale);
+			break;
+		case 9:
+			App->renderer->Blit(t_numeros, posX, posY, &rect9, scale);
+			break;
+		}
+
+		posX -= separacio; //Separació entre nombres
+	}
+	posX = initialPosX; //Posició del primer element de la dreta
 }
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)

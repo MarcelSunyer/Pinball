@@ -71,20 +71,7 @@ public:
 	PhysBody* muelle;
 	PhysBody* muelle_max;
 
-	//score
-	int score = 0;
-	int max_score = 0;
-	int prev_score = 0;
-	int posicioFont = 110;
-	int posicioFontY = 20;
-
-	int posicioVidesX = 260;
-	int posicioVidesY = 30;
-
-	int ball_count = 0;
-
-	bool lose = false;
-	bool start = true;
+	
 
 	// Lower ground sensor (will kill all objects passig through it)
 	PhysBody* lower_ground_sensor;
@@ -105,7 +92,22 @@ public:
 	SDL_Texture* t_kicker;
 	SDL_Texture* t_parche;
 	SDL_Texture* t_numeros;
+	SDL_Texture* startSprite;
 
+	//score
+	int score = 0;
+	int max_score = 0;
+	int prev_score = 0;
+	int posicioFont = 110;
+	int posicioFontY = 20;
+
+	int posicioVidesX = 260;
+	int posicioVidesY = 30;
+
+	int ball_count = 0;
+
+	bool lose = false;
+	bool start = true;
 
 	// FX
 	uint bonus_fx;

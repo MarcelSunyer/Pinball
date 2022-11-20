@@ -44,6 +44,7 @@ bool ModuleSceneIntro::Start()
 	t_kicker = App->textures->Load("pinball/muelle.png");
 	t_parche = App->textures->Load("pinball/parche.png");
 	t_numeros = App->textures->Load("pinball/numeros.png");
+	startSprite = App->textures->Load("pinball/Start.png");
 
 
 
@@ -185,6 +186,8 @@ bool ModuleSceneIntro::Start()
 	disparo_p->EnableLimit(true);
 	disparo_p->SetLimits(-4, 4);	
 
+	start = true;
+
 	return ret;
 }
 
@@ -198,8 +201,17 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update()
 {	
 	
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && ball_count == 0 && !lose) {
+		
+		//Borrar el PRESS ENTER TO START
+		start = false;
+		score = 0;
+		ball_count = 3;
+	}
 
-	
+	if (start) {
+		App->renderer->Blit(startSprite, 0, 0);
+	}
 
 	//Textura flipper esquerra
 	SDL_Rect flipper_i;

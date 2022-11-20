@@ -36,6 +36,10 @@ bool ModuleSceneIntro::Start()
 
 	// Load textures
 
+
+
+	vidas = 3;
+
 	
 
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
@@ -164,6 +168,7 @@ bool ModuleSceneIntro::Start()
 
 
 	alien = App->physics->CreateCircle(287, 185,20,b2_staticBody);
+	alien = App->physics->CreateCircle(257, 185, 20, b2_staticBody);
 
 
 	//Rebote del alien
@@ -322,7 +327,7 @@ update_status ModuleSceneIntro::Update()
 	if (start) {
 		App->renderer->Blit(startSprite, 0, 0);
 	}
-
+	
 	return UPDATE_CONTINUE;
 }
 

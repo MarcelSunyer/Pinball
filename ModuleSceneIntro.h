@@ -111,7 +111,12 @@ public:
 
 	bool lose = false;
 	bool start = true;
-
+	
+	//revivir
+	bool died = false;
+	int vidas = 3;
+	bool vida;
+	
 	// FX
 	uint bonus_fx;
 

@@ -198,20 +198,8 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update()
 {	
 	
-	//score
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && ball_count == 0 && !lose) {
 
-		/*int x, y;
-		circles.getfirst()->data->getposition(x, y);
-		app->renderer->blit(t_bola, x, y);*/
-
-
-		//Imprimir Score
-		FontDraw(score, 4, posicioFont, posicioFontY, 30, 1);
-
-		//Imprimir Vides
-		FontDraw(ball_count, 1, posicioVidesX, posicioVidesY, 0, 0.6);
-	}
+	
 
 	//Textura flipper esquerra
 	SDL_Rect flipper_i;
@@ -280,10 +268,17 @@ update_status ModuleSceneIntro::Update()
 	return UPDATE_CONTINUE;
 
 	
+	//score
 
+
+	//Imprimir Score
+	FontDraw(score, 4, posicioFont, posicioFontY, 20);
+
+	//Imprimir Vides
+	FontDraw(ball_count, 1, posicioVidesX, posicioVidesY, 0);
 }
 
-void ModuleSceneIntro::FontDraw(int score, int n, int posX, int posY, int separacio, float scale) {
+void ModuleSceneIntro::FontDraw(int score, int n, int posX, int posY, int separacio) {
 	int initialPosX = posX;
 	int scoreCopia = score;
 	int scoreArray[4];
@@ -307,34 +302,34 @@ void ModuleSceneIntro::FontDraw(int score, int n, int posX, int posY, int separa
 
 		switch (scoreArray[k]) {
 		case 0:
-			App->renderer->Blit(t_numeros, posX, posY, &rect0, scale);
+			App->renderer->Blit(t_numeros, posX, posY, &rect0);
 			break;
 		case 1:
-			App->renderer->Blit(t_numeros, posX, posY, &rect1, scale);
+			App->renderer->Blit(t_numeros, posX, posY, &rect1);
 			break;
 		case 2:
-			App->renderer->Blit(t_numeros, posX, posY, &rect2, scale);
+			App->renderer->Blit(t_numeros, posX, posY, &rect2);
 			break;
 		case 3:
-			App->renderer->Blit(t_numeros, posX, posY, &rect3, scale);
+			App->renderer->Blit(t_numeros, posX, posY, &rect3);
 			break;
 		case 4:
-			App->renderer->Blit(t_numeros, posX, posY, &rect4, scale);
+			App->renderer->Blit(t_numeros, posX, posY, &rect4);
 			break;
 		case 5:
-			App->renderer->Blit(t_numeros, posX, posY, &rect5, scale);
+			App->renderer->Blit(t_numeros, posX, posY, &rect5);
 			break;
 		case 6:
-			App->renderer->Blit(t_numeros, posX, posY, &rect6, scale);
+			App->renderer->Blit(t_numeros, posX, posY, &rect6);
 			break;
 		case 7:
-			App->renderer->Blit(t_numeros, posX, posY, &rect7, scale);
+			App->renderer->Blit(t_numeros, posX, posY, &rect7);
 			break;
 		case 8:
-			App->renderer->Blit(t_numeros, posX, posY, &rect8, scale);
+			App->renderer->Blit(t_numeros, posX, posY, &rect8);
 			break;
 		case 9:
-			App->renderer->Blit(t_numeros, posX, posY, &rect9, scale);
+			App->renderer->Blit(t_numeros, posX, posY, &rect9);
 			break;
 		}
 

@@ -20,7 +20,7 @@ public:
 	update_status Update();
 	bool CleanUp();
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
-	void FontDraw(int score, int n, int posX, int posY, int separacio, float scale);
+	void FontDraw(int score, int n, int posX, int posY, int separacio);
 
 public:
 
@@ -71,10 +71,7 @@ public:
 	PhysBody* muelle;
 	PhysBody* muelle_max;
 
-	
-	
-
-
+	//score
 	int score = 0;
 	int max_score = 0;
 	int prev_score = 0;
@@ -88,17 +85,6 @@ public:
 
 	bool lose = false;
 	bool start = true;
-
-	bool BC1 = false;
-	bool BC2 = false;
-	bool BC3 = false;
-
-	struct Ball {
-		int x, y;
-	};
-	Ball ball;
-
-	int ballY = 550;
 
 	// Lower ground sensor (will kill all objects passig through it)
 	PhysBody* lower_ground_sensor;
@@ -119,7 +105,7 @@ public:
 	SDL_Texture* t_kicker;
 	SDL_Texture* t_parche;
 	SDL_Texture* t_numeros;
-	
+
 
 	// FX
 	uint bonus_fx;

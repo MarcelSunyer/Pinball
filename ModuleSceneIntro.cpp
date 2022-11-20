@@ -311,7 +311,7 @@ update_status ModuleSceneIntro::Update()
 	}
 
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && ball_count == 0 && !lose) {
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && ball_count == 0 && !lose) {
 
 		//Borrar el PRESS ENTER TO START
 		start = false;

@@ -166,7 +166,9 @@ bool ModuleSceneIntro::Start()
 	collider_flipper_joint_d->EnableLimit(true);
 	collider_flipper_joint_d->SetLimits(-0.5, 0.3);
 
-	alien = App->physics->CreateCircle(287, 185, 20, b2_staticBody);
+	alien_1 = App->physics->CreateCircle(265, 170, 20, b2_staticBody);
+	alien_2 = App->physics->CreateCircle(230, 230, 20, b2_staticBody);
+	alien_3 = App->physics->CreateCircle(325, 230, 20, b2_staticBody);
 	
 	
 	//Muelle
@@ -215,7 +217,9 @@ update_status ModuleSceneIntro::Update()
 	int angle_flipper_d = collider_flipper_d->body->GetAngle() * RADTODEG;
 	App->renderer->Blit(t_flipper_d, 245, 660, &flipper_d, 1, angle_flipper_d, 56, 12);
 	
-	App->renderer->Blit(t_alien,257,155);
+	App->renderer->Blit(t_alien,237,135);
+	App->renderer->Blit(t_alien, 205, 190);
+	App->renderer->Blit(t_alien, 295, 190);
 	// The target point of the raycast is the mouse current position (will change over game time)
 	iPoint mouse;
 	mouse.x = App->input->GetMouseX();
@@ -234,7 +238,9 @@ update_status ModuleSceneIntro::Update()
 		disparo_p->SetMotorSpeed(10);
 	}
 	
-	
+	alien_1->listener=this;
+	alien_2->listener = this;
+	alien_3->listener = this;
 	
 	
 	
@@ -333,8 +339,11 @@ update_status ModuleSceneIntro::Update()
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	// Play Audio FX on every collision, regardless of who is colliding
+	
+
 	App->audio->PlayFx(bonus_fx);
 	
+
 	// Do something else. You can also check which bodies are colliding (sensor? ball? player?)
 	
 }

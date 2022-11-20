@@ -60,9 +60,9 @@ public:
 	PhysBody* ref_dis;
 	b2PrismaticJoint* disparo_p;
 
-	PhysBody* alien;
-	PhysBody* ref_alien;
-	b2PrismaticJoint* rebote;
+	PhysBody* alien_1;
+	PhysBody* alien_2;
+	PhysBody* alien_3;
 
 
 	PhysBody* dead;

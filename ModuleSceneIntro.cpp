@@ -143,8 +143,8 @@ bool ModuleSceneIntro::Start()
 	collider_esquerra_t = App->physics->CreateChain(0, 0, collider_esquerra, 116, b2_staticBody);
 
 	collider_pivot_i = App->physics->CreateChain(15, -1, collider_pivote_izquiera, 14, b2_staticBody);
-	collider_pivot_i = App->physics->CreateChain(0, 0, collider_pivote_centre, 14, b2_staticBody);
-	collider_pivot_i = App->physics->CreateChain(30, 0, collider_pivote_centre, 14, b2_staticBody);
+	collider_pivot_i = App->physics->CreateChain(2, 0, collider_pivote_centre, 14, b2_staticBody);
+	collider_pivot_i = App->physics->CreateChain(31, 0, collider_pivote_centre, 14, b2_staticBody);
 
 	
 	collider_detector_i = App->physics->CreateRectangleSensor(455, 250, 20, 10, b2_staticBody);
@@ -165,26 +165,11 @@ bool ModuleSceneIntro::Start()
 	collider_flipper_joint_d->EnableLimit(true);
 	collider_flipper_joint_d->SetLimits(-0.5, 0.3);
 
-
-
-	alien = App->physics->CreateCircle(287, 185,20,b2_staticBody);
-	alien = App->physics->CreateCircle(257, 185, 20, b2_staticBody);
-
-
-	//Rebote del alien
-	
-	ref_alien = App->physics->CreateRectangle(455, 660, 5, 30, b2_staticBody);
 	alien = App->physics->CreateCircle(287, 185, 20, b2_staticBody);
-	rebote = App->physics->CreatePrismaticJoint(ref_alien, b2Vec2(0, 0), alien, b2Vec2(0, 0), b2Vec2(0, 1), 0, false, false);
-
-	rebote->EnableMotor(true);
-	rebote->SetMaxMotorForce(1000);
-
-	rebote->EnableLimit(false);
-	rebote->SetLimits(-4, 4);
+	
 	
 	//Muelle
-	ref_dis = App->physics->CreateRectangle(455, 660, 5, 30, b2_staticBody);
+	ref_dis = App->physics->CreateRectangle(455, 690, 5, 30, b2_staticBody);
 	disparo = App->physics->CreateRectangle(455, 644, 20, 5, b2_dynamicBody);
 	disparo_p = App->physics->CreatePrismaticJoint(ref_dis, b2Vec2(0, 0), disparo, b2Vec2(0, 0), b2Vec2(0, 1), 0, false, false);
 	
@@ -248,12 +233,7 @@ update_status ModuleSceneIntro::Update()
 		disparo_p->SetMotorSpeed(10);
 	}
 	
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
-		rebote->SetMotorSpeed(-15);
-	else
-	{
-		rebote->SetMotorSpeed(10);
-	}
+	
 	
 	
 	

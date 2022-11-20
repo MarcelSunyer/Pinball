@@ -53,6 +53,7 @@ bool ModuleSceneIntro::Start()
 	t_numeros = App->textures->Load("pinball/numeros.png");
 	startSprite = App->textures->Load("pinball/Start.png");
 	finishSprite = App->textures->Load("pinball/lose.png");
+	t_meteorito = App->textures->Load("pinball/meteo.png");
 
 
 
@@ -166,10 +167,13 @@ bool ModuleSceneIntro::Start()
 	collider_flipper_joint_d->EnableLimit(true);
 	collider_flipper_joint_d->SetLimits(-0.5, 0.3);
 
+	//Aliens
 	alien_1 = App->physics->CreateCircle(265, 170, 20, b2_staticBody);
 	alien_2 = App->physics->CreateCircle(230, 230, 20, b2_staticBody);
 	alien_3 = App->physics->CreateCircle(325, 230, 20, b2_staticBody);
 	
+	//Meteo
+	meteorito = App->physics->CreateCircle(435, 54, 19, b2_staticBody);
 	
 	//Muelle
 	ref_dis = App->physics->CreateRectangle(455, 690, 5, 30, b2_staticBody);
@@ -220,6 +224,7 @@ update_status ModuleSceneIntro::Update()
 	App->renderer->Blit(t_alien,237,135);
 	App->renderer->Blit(t_alien, 205, 190);
 	App->renderer->Blit(t_alien, 295, 190);
+	App->renderer->Blit(t_meteorito, 400,30);
 	// The target point of the raycast is the mouse current position (will change over game time)
 	iPoint mouse;
 	mouse.x = App->input->GetMouseX();
@@ -241,6 +246,7 @@ update_status ModuleSceneIntro::Update()
 	alien_1->listener=this;
 	alien_2->listener = this;
 	alien_3->listener = this;
+	meteorito->listener = this;
 	
 	
 	
@@ -351,7 +357,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	
 
 	App->audio->PlayFx(bonus_fx);
-	
+	score += 100;
 
 	// Do something else. You can also check which bodies are colliding (sensor? ball? player?)
 	

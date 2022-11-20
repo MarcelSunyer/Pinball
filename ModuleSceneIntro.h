@@ -64,6 +64,7 @@ public:
 	PhysBody* alien_2;
 	PhysBody* alien_3;
 
+	PhysBody* meteorito;
 
 	PhysBody* dead;
 
@@ -98,9 +99,10 @@ public:
 	SDL_Texture* startSprite;
 	SDL_Texture* finishSprite;
 
+
 	//score
 	uint score = 0;
-	int max_score = 0;
+	int max_score = 10000;
 	int prev_score = 0;
 	int posicioFont = 110;
 	int posicioFontY = 20;

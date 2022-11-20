@@ -78,10 +78,10 @@ update_status ModulePhysics::PostUpdate()
 	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
 
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	/*if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 	{
 		CreateRectangle(250, 800, 500,100, b2_staticBody);
-	}
+	}*/
 	// If we are not in debug mode, do nothing else here and Keep playing
 	if(!debug)
 		return UPDATE_CONTINUE;

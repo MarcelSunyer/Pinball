@@ -47,7 +47,7 @@ update_status ModulePlayer::Update()
 	
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN && pelota == 0)
 	{
-		balls.add(App->physics->CreateCircle(455 , 615, 10, b2_dynamicBody));
+		balls.add(App->physics->CreateCircle(455 , 640, 10, b2_dynamicBody));
 		balls.getLast()->data->listener = this;
 		pelota += 1;
 	}

@@ -43,7 +43,9 @@ public:
 	
 	PhysBody* collider_detector_i;
 
-
+	b2Vec2 resetPos;
+	b2Vec2 initMPos;
+	b2Vec2 initMaxPos;
 
 
 	PhysBody* collider_flipper_i;
@@ -56,11 +58,17 @@ public:
 
 	PhysBody* disparo;
 	PhysBody* ref_dis;
-	b2RevoluteJoint* disparo_p;
+	b2PrismaticJoint* disparo_p;
+
+	PhysBody* alien;
+	PhysBody* ref_alien;
+	b2PrismaticJoint* rebote;
 
 
+	PhysBody* dead;
 
-
+	PhysBody* muelle;
+	PhysBody* muelle_max;
 
 
 
@@ -78,10 +86,9 @@ public:
 	SDL_Texture* t_bola;
 	SDL_Texture* t_flipper_e;
 	SDL_Texture* t_flipper_d;
+	SDL_Texture* t_alien;
+	SDL_Texture* t_meteorito;
 
-	
-	PhysBody* collider_rebotador_1;
-	SDL_Texture* t_rebotador_1;
 	// FX
 	uint bonus_fx;
 

@@ -34,6 +34,8 @@ bool ModuleSceneIntro::Start()
 	t_map = App->textures->Load("pinball/map.png");
 	t_flipper_e = App->textures->Load("pinball/Flipper_esquerre.png");
 	t_flipper_d = App->textures->Load("pinball/Flipper_dreta.png");
+	t_alien = App->textures->Load("pinball/Alien.png");
+
 
 	// Create a big red sensor on the bottom of the screen.
 	// This sensor will not make other objects collide with it, but it can tell if it is "colliding" with something else
@@ -145,19 +147,33 @@ bool ModuleSceneIntro::Start()
 	collider_flipper_joint_d->EnableLimit(true);
 	collider_flipper_joint_d->SetLimits(-0.5, 0.3);
 
+
+
+	alien = App->physics->CreateCircle(287, 185,20,b2_staticBody);
+
+
+	//Rebote del alien
+	
+	ref_alien = App->physics->CreateRectangle(455, 660, 5, 30, b2_staticBody);
+	alien = App->physics->CreateCircle(287, 185, 20, b2_staticBody);
+	rebote = App->physics->CreatePrismaticJoint(ref_alien, b2Vec2(0, 0), alien, b2Vec2(0, 0), b2Vec2(0, 1), 0, false, false);
+
+	rebote->EnableMotor(true);
+	rebote->SetMaxMotorForce(1000);
+
+	rebote->EnableLimit(false);
+	rebote->SetLimits(-4, 4);
+	
+	//Muelle
 	ref_dis = App->physics->CreateRectangle(455, 660, 5, 30, b2_staticBody);
-	disparo = App->physics->CreateRectangle(450, 644, 27, 5, b2_dynamicBody);
-	disparo_p = App->physics->CreateRevoluteJoint(ref_dis, b2Vec2(0, -0.3), disparo, b2Vec2(0, 0), 0, false, false);
+	disparo = App->physics->CreateRectangle(455, 644, 20, 5, b2_dynamicBody);
+	disparo_p = App->physics->CreatePrismaticJoint(ref_dis, b2Vec2(0, 0), disparo, b2Vec2(0, 0), b2Vec2(0, 1), 0, false, false);
+	
+	disparo_p->EnableMotor(true);
+	disparo_p->SetMaxMotorForce(1000);
 
 	disparo_p->EnableLimit(true);
-	disparo_p->SetLimits(-1, 1);
-
-
-
-	//Load Textures
-	t_rebotador_1 = App->textures->Load("pinball/bola1.png");
-	
-	
+	disparo_p->SetLimits(-4, 4);	
 
 	return ret;
 }
@@ -190,18 +206,32 @@ update_status ModuleSceneIntro::Update()
 	int angle_flipper_d = collider_flipper_d->body->GetAngle() * RADTODEG;
 	App->renderer->Blit(t_flipper_d, 245, 660, &flipper_d, 1, angle_flipper_d, 56, 12);
 	
-	
+	App->renderer->Blit(t_alien,257,155);
 	// The target point of the raycast is the mouse current position (will change over game time)
 	iPoint mouse;
 	mouse.x = App->input->GetMouseX();
 	mouse.y = App->input->GetMouseY();
 	
 	
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
-		disparo->body->ApplyForce(b2Vec2(0,4), (b2Vec2(10, 2.5)),true);
 	
 
-
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+		disparo_p->SetMotorSpeed(-15);
+	else
+	{
+		disparo_p->SetMotorSpeed(10);
+	}
+	
+	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
+		rebote->SetMotorSpeed(-15);
+	else
+	{
+		rebote->SetMotorSpeed(10);
+	}
+	
+	
+	
+	
 	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		collider_flipper_i->body->ApplyTorque(-70, true);
 	else
@@ -223,7 +253,6 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	// Play Audio FX on every collision, regardless of who is colliding
 	App->audio->PlayFx(bonus_fx);
-
 	
 	// Do something else. You can also check which bodies are colliding (sensor? ball? player?)
 	

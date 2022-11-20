@@ -41,7 +41,9 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	
+	iPoint mouse;
+	mouse.x = App->input->GetMouseX();
+	mouse.y = App->input->GetMouseY();
 	
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN && pelota == 0)
 	{
@@ -50,6 +52,11 @@ update_status ModulePlayer::Update()
 		pelota += 1;
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_6) == KEY_DOWN)
+	{
+		balls.add(App->physics->CreateCircle(mouse.x, mouse.y, 10, b2_dynamicBody));
+		balls.getLast()->data->listener = this;
+	}
 
 	//BLITS
 	p2List_item<PhysBody*>* c = balls.getFirst();

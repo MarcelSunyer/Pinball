@@ -173,7 +173,7 @@ bool ModuleSceneIntro::Start()
 	alien_3 = App->physics->CreateCircle(325, 230, 20, b2_staticBody);
 	
 	//Meteo
-	meteorito = App->physics->CreateCircle(435, 54, 19, b2_staticBody);
+	meteorito = App->physics->CreateCircle(433, 56, 20, b2_staticBody);
 	
 	//Muelle
 	ref_dis = App->physics->CreateRectangle(455, 690, 5, 30, b2_staticBody);

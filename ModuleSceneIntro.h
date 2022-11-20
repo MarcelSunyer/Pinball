@@ -73,6 +73,10 @@ public:
 
 	
 
+	char scoreText[10] = { "\0" };
+	char ball_countText[10] = { "\0" };
+	int scoreFont = -1;
+
 	// Lower ground sensor (will kill all objects passig through it)
 	PhysBody* lower_ground_sensor;
 	
@@ -95,7 +99,7 @@ public:
 	SDL_Texture* startSprite;
 
 	//score
-	int score = 0;
+	uint score = 0;
 	int max_score = 0;
 	int prev_score = 0;
 	int posicioFont = 110;

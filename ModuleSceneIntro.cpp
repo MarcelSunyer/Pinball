@@ -6,6 +6,7 @@
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
+#include "ModuleFonts.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -29,7 +30,9 @@ bool ModuleSceneIntro::Start()
 	// Set camera position
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
-	
+	//Load de la fuente
+	char lookupTable[] = { "1234567890" };
+	scoreFont = App->fonts->Load("pinball/numeros.png", lookupTable, 2);
 
 	// Load textures
 
@@ -267,7 +270,7 @@ update_status ModuleSceneIntro::Update()
 	
 	App->renderer->Blit(t_parche, 410, 600);
 
-	return UPDATE_CONTINUE;
+	
 
 	//scores 
 
@@ -275,10 +278,14 @@ update_status ModuleSceneIntro::Update()
 
 
 		//Imprimir Score
-		FontDraw(score, 4, posicioFont, posicioFontY, 30);
+		sprintf_s(scoreText, 10, "%5d", score);
+		App->fonts->BlitText(0, 35, scoreFont, scoreText);
+		//FontDraw(score, 4, posicioFont, posicioFontY, 20);
 
 		//Imprimir Vides
-		FontDraw(ball_count, 1, posicioVidesX, posicioVidesY, 0);
+		sprintf_s(ball_countText, 10, "%5d", ball_count);
+		App->fonts->BlitText(-40, 88, scoreFont, ball_countText);
+		//FontDraw(ball_count, 1, posicioVidesX, posicioVidesY, 0);
 	}
 
 
@@ -294,7 +301,7 @@ update_status ModuleSceneIntro::Update()
 		App->renderer->Blit(startSprite, 0, 0);
 	}
 
-	
+	return UPDATE_CONTINUE;
 }
 
 void ModuleSceneIntro::FontDraw(int score, int n, int posX, int posY, int separacio) {

@@ -66,8 +66,8 @@ bool ModuleSceneIntro::Start()
 		28, 15,	481, 14, 481, 738, 300, 741, 299, 722, 426, 629, 431, 621, 433, 611,
 		434, 444, 422, 432,	440, 421, 438, 679, 443, 685, 451, 689, 458, 690, 463, 685,
 		467, 678, 466, 178, 465, 161, 461, 137, 452, 119, 444, 109, 457, 101, 469, 87,
-		476, 71, 476, 51, 467, 33, 455, 25, 440, 19, 422, 18, 405, 25, 393, 35,	386, 52,
-		383, 62, 338, 51, 291, 47, 258, 47, 224, 48, 175, 59, 125, 82, 91, 115, 72, 139,
+		476, 71, 476, 51, 467, 33, 455, 25, 440, 19, 422, 18, 405, 25, 393, 35,	388, 47,
+		393, 58, 338, 51, 291, 47, 258, 47, 224, 48, 175, 59, 125, 82, 91, 115, 72, 139,
 		47, 191, 41, 221, 40, 441, 55, 455, 59, 461, 54, 467, 44, 476, 45, 611,	48, 621,
 		51, 626, 60, 636, 180, 721, 178, 739, 29, 736, 28, 16 };
 	
@@ -146,7 +146,7 @@ bool ModuleSceneIntro::Start()
 	collider_detector_i = App->physics->CreateRectangleSensor(455, 250, 20, 10, b2_staticBody);
 	
 	//Flipper esquerra
-	ref_i = App->physics->CreateRectangle(180, 675, 10, 10, b2_staticBody);
+	ref_i = App->physics->CreateRectangle(180, 680, 10, 10, b2_staticBody);
 	collider_flipper_i = App->physics->CreateRectangle(210, 660, 60, 15, b2_dynamicBody);
 	collider_flipper_joint_i = App->physics->CreateRevoluteJoint(ref_i, b2Vec2(0,0), collider_flipper_i, b2Vec2(-0.4, 0), 0, false, false);
 	
@@ -155,8 +155,8 @@ bool ModuleSceneIntro::Start()
 	
 	//Flipper dreta
 	ref_d = App->physics->CreateRectangle(300, 680, 10, 10, b2_staticBody);
-	collider_flipper_d = App->physics->CreateRectangle(230, 660, 60, 15, b2_dynamicBody);
-	collider_flipper_joint_d = App->physics->CreateRevoluteJoint(ref_d, b2Vec2(0,0), collider_flipper_d, b2Vec2(0.4, 0.07), 0, false, false);
+	collider_flipper_d = App->physics->CreateRectangle(210, 660, 60, 15, b2_dynamicBody);
+	collider_flipper_joint_d = App->physics->CreateRevoluteJoint(ref_d, b2Vec2(0,0), collider_flipper_d, b2Vec2(0.4, 0), 0, false, false);
 
 	collider_flipper_joint_d->EnableLimit(true);
 	collider_flipper_joint_d->SetLimits(-0.5, 0.3);
@@ -203,7 +203,7 @@ bool ModuleSceneIntro::CleanUp()
 
 update_status ModuleSceneIntro::Update()
 {	
-	
+	App->renderer->Blit(t_map, 0, 0);
 
 	
 	//Textura flipper esquerra
@@ -212,9 +212,8 @@ update_status ModuleSceneIntro::Update()
 	flipper_i.y = 0;
 	flipper_i.w = 67;
 	flipper_i.h = 26;
-	App->renderer->Blit(t_map, 0, 0);
 	int angle_flipper_i = collider_flipper_i->body->GetAngle()*RADTODEG;
-	App->renderer->Blit(t_flipper_e, 168, 660, &flipper_i, 1, angle_flipper_i, 10, 13);
+	App->renderer->Blit(t_flipper_e, 165, 660, &flipper_i, 1, angle_flipper_i, 10, 13);
 	
 	//Textura flipper dreta
 	SDL_Rect flipper_d;
@@ -280,6 +279,21 @@ update_status ModuleSceneIntro::Update()
 	{
 		ball_count--;
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+	{
+		score++;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+	{
+		score--;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	{
+		score = 1000;
+	}
+
 	//scores 
 
 	if (!lose && !start) {
@@ -287,12 +301,12 @@ update_status ModuleSceneIntro::Update()
 
 		//Imprimir Score
 		sprintf_s(scoreText, 10, "%5d", score);
-		App->fonts->BlitText(0, 35, scoreFont, scoreText);
+		App->fonts->BlitText(27, 35, scoreFont, scoreText);
 		//FontDraw(score, 4, posicioFont, posicioFontY, 20);
 
 		//Imprimir Vides
 		sprintf_s(ball_countText, 10, "%5d", ball_count);
-		App->fonts->BlitText(-40, 88, scoreFont, ball_countText);
+		App->fonts->BlitText(-25, 88, scoreFont, ball_countText);
 		//FontDraw(ball_count, 1, posicioVidesX, posicioVidesY, 0);
 	}
 
@@ -310,66 +324,6 @@ update_status ModuleSceneIntro::Update()
 	}
 
 	return UPDATE_CONTINUE;
-}
-
-void ModuleSceneIntro::FontDraw(int score, int n, int posX, int posY, int separacio) {
-	int initialPosX = posX;
-	int scoreCopia = score;
-	int scoreArray[4];
-	for (int j = 0; j < n; ++j) {
-		scoreArray[j] = scoreCopia % 10;
-		scoreCopia /= 10;
-	}
-
-	SDL_Rect rect0 = { 259, 65, 33, 40 };
-	SDL_Rect rect1 = { 25, 11, 20, 38 };
-	SDL_Rect rect2 = { 80, 10, 29, 40 };
-	SDL_Rect rect3 = { 141, 10, 30, 40 };
-	SDL_Rect rect4 = { 200, 11, 31, 38 };
-	SDL_Rect rect5 = { 261, 10, 29, 40 };
-	SDL_Rect rect6 = { 19, 65, 32, 40 };
-	SDL_Rect rect7 = { 82, 65, 26, 40 };
-	SDL_Rect rect8 = { 140, 65, 31, 40 };
-	SDL_Rect rect9 = { 199, 65, 32, 40 };
-
-	for (int k = 0; k < n; ++k) {
-
-		switch (scoreArray[k]) {
-		case 0:
-			App->renderer->Blit(t_numeros, posX, posY, &rect0);
-			break;
-		case 1:
-			App->renderer->Blit(t_numeros, posX, posY, &rect1);
-			break;
-		case 2:
-			App->renderer->Blit(t_numeros, posX, posY, &rect2);
-			break;
-		case 3:
-			App->renderer->Blit(t_numeros, posX, posY, &rect3);
-			break;
-		case 4:
-			App->renderer->Blit(t_numeros, posX, posY, &rect4);
-			break;
-		case 5:
-			App->renderer->Blit(t_numeros, posX, posY, &rect5);
-			break;
-		case 6:
-			App->renderer->Blit(t_numeros, posX, posY, &rect6);
-			break;
-		case 7:
-			App->renderer->Blit(t_numeros, posX, posY, &rect7);
-			break;
-		case 8:
-			App->renderer->Blit(t_numeros, posX, posY, &rect8);
-			break;
-		case 9:
-			App->renderer->Blit(t_numeros, posX, posY, &rect9);
-			break;
-		}
-
-		posX -= separacio; //Separació entre nombres
-	}
-	posX = initialPosX; //Posició del primer element de la dreta
 }
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)

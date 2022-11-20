@@ -20,7 +20,6 @@ public:
 	update_status Update();
 	bool CleanUp();
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
-	void FontDraw(int score, int n, int posX, int posY, int separacio);
 
 public:
 
